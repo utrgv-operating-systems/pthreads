@@ -1,3 +1,7 @@
+/*
+	This program shows how to create a set of threads that can print a given message.
+*/
+
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -6,10 +10,10 @@ char *messages[NUM_THREADS];
 void *PrintHello(void *threadid){
 	int *id_ptr, taskid;
 	sleep(1);
-	id_ptr = (int *) threadid;
+	id_ptr = (int *) threadid; // cast the argument to what we wanted.
 	taskid = *id_ptr;
 	printf("Thread %d: %s\n", taskid, messages[taskid]); 
-	pthread_exit(NULL);
+	pthread_exit(NULL);  // exit thread
 }
 
 int main(int argc, char *argv[])
@@ -30,13 +34,13 @@ int main(int argc, char *argv[])
 		taskids[t] = (int *) malloc(sizeof(int));
 		*taskids[t] = t;
 		printf("Creating thread %d\n", t);
-		rc = pthread_create(&threads[t], NULL, PrintHello, (void *) taskids[t] );
+		rc = pthread_create(&threads[t], NULL, PrintHello, (void *) taskids[t] ); // Create a thread and give its task ID
 		if (rc) {
 			printf("ERROR; return code from pthread_create() is %d\n", rc);
 			exit(-1);
 		}
 	}
-	pthread_exit(NULL);
+	pthread_exit(NULL); // exit thread
 
 }
 
