@@ -1,3 +1,7 @@
+/*
+	This program demonstrates the usage of join.
+*/
+
 #include <pthread.h>
 #include <stdio.h> 
 #include <stdlib.h> 
@@ -5,6 +9,7 @@
 
 #define NUM_THREADS 4 
 
+// Some busy work doing calculations
 void *BusyWork(void *t) { 
 	int i; 
 	long tid; 
@@ -31,6 +36,7 @@ int main (int argc, char *argv[]) {
 	pthread_attr_init(&attr);
 	pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
 
+	// Create NUM_THREADS threads with some busy work
 	for(t=0; t<NUM_THREADS; t++) {
 		printf("Main: creating thread %ld\n", t);
 		rc = pthread_create(&thread[t], &attr, BusyWork, (void *)t);
@@ -41,6 +47,7 @@ int main (int argc, char *argv[]) {
 	/* Free attribute and wait for the other threads */
 	pthread_attr_destroy(&attr);
 	
+	// Join all threads one by one, the main thread does not run the next join statement until the joined thread terminates.
 	for(t=0; t<NUM_THREADS; t++) {
 		rc = pthread_join(thread[t], &status); 
 		if (rc) {
