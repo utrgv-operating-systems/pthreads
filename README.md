@@ -7,6 +7,6 @@ gcc -pthread threadsEx0.c -o threadEx0
 ```
 The threadsJoinEx.c file uses the functions of sin() tan() so it needs the -lm option.
 ```console
-gcc threadsJoinEx.c –pthread –lm –o threadsJoinEx
+gcc threadsJoinEx.c -pthread -lm -o threadsJoinEx
 ```
 
